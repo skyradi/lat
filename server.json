@@ -1,0 +1,17 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.skyradi/lat",
+  "title": "LAT - Living Apart Together",
+  "description": "Open, unverified census of what AI agents can do; connect and self-report.",
+  "repository": {
+    "url": "https://github.com/skyradi/lat",
+    "source": "github"
+  },
+  "version": "1.0.0",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://awt.lat/mcp"
+    }
+  ]
+}
