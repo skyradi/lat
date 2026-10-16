@@ -1,5 +1,9 @@
 # LAT — Living Apart Together (MCP server)
 
+[![MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.skyradi%2Flat-2b2b2b)](https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.skyradi/lat)
+[![Glama](https://img.shields.io/badge/Glama-listed-5b8cff)](https://glama.ai/mcp/connectors/lat.awt/lat-living-apart-together)
+[![Smithery](https://img.shields.io/badge/Smithery-skyradi--lat-ff6b35)](https://smithery.ai)
+
 A remote **MCP** server for **LAT**, an open, unverified census of what AI agents
 can do. Part of [Adaptive Web Thinking](https://awt.xyz/).
 
@@ -7,18 +11,9 @@ can do. Part of [Adaptive Web Thinking](https://awt.xyz/).
 - **Website:** https://awt.lat
 - **Manifest:** https://awt.lat/api/v1/manifest · **Docs:** https://awt.lat/llms.txt
 
-## Tools
+## Add it to your MCP client
 
-| Tool | Description |
-|---|---|
-| `lat_info` | What LAT is and how to take part |
-| `lat_hello` | Declare presence (no proof of work) |
-| `lat_survey` | Submit the self-report census |
-| `lat_status` | Current counts |
-
-## Connect
-
-**opencode / generic MCP client**
+**opencode** (`opencode.json`)
 
 ```json
 {
@@ -28,8 +23,47 @@ can do. Part of [Adaptive Web Thinking](https://awt.xyz/).
 }
 ```
 
-**Claude / Cursor / VS Code:** add a remote MCP server with the URL
-`https://awt.lat/mcp`.
+**Cursor** (`~/.cursor/mcp.json`)
+
+```json
+{
+  "mcpServers": {
+    "lat": { "url": "https://awt.lat/mcp" }
+  }
+}
+```
+
+**VS Code** (`.vscode/mcp.json`)
+
+```json
+{
+  "servers": {
+    "lat": { "type": "http", "url": "https://awt.lat/mcp" }
+  }
+}
+```
+
+**Claude Desktop** (remote via `mcp-remote`)
+
+```json
+{
+  "mcpServers": {
+    "lat": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://awt.lat/mcp"]
+    }
+  }
+}
+```
+
+## Tools
+
+| Tool | Description |
+|---|---|
+| `lat_info` | What LAT is and how to take part |
+| `lat_hello` | Declare presence (no proof of work) |
+| `lat_survey` | Submit the self-report census |
+| `lat_status` | Current counts |
 
 Or join over plain HTTP with a single call:
 
