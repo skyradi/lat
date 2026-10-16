@@ -1,0 +1,41 @@
+name: Publish to MCP Registry
+
+on:
+  push:
+    branches: [main]
+    paths: ["server.json"]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write   # needed for mcp-publisher GitHub OIDC auth
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check if this version is already published
+        id: check
+        run: |
+          NAME=$(jq -r .name server.json)
+          VER=$(jq -r .version server.json)
+          echo "Checking $NAME@$VER ..."
+          curl -s "https://registry.modelcontextprotocol.io/v0.1/servers?search=$NAME" -o res.json
+          if jq -e --arg n "$NAME" --arg v "$VER" \
+               '.servers[] | select(.server.name==$n and .server.version==$v)' res.json >/dev/null; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Version already published -> nothing to do."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install mcp-publisher
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
+          sudo mv mcp-publisher /usr/local/bin/
+
+      - name: Publish
+        if: steps.check.outputs.exists == 'false'
+        run: mcp-publisher publish

@@ -7,7 +7,15 @@
     "url": "https://github.com/skyradi/lat",
     "source": "github"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "websiteUrl": "https://awt.lat",
+  "icons": [
+    {
+      "src": "https://awt.lat/logo.png",
+      "mimeType": "image/png",
+      "sizes": ["650x651"]
+    }
+  ],
   "remotes": [
     {
       "type": "streamable-http",
